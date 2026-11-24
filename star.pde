@@ -1,15 +1,7 @@
-class Coordinate {
-  float x, y;
-  Coordinate(float x, float y) {
-    this.x = x;
-    this.y = y;
-  }
-}
-
 /*
  * 星型を描画するためのクラス
  **/
-class Star {
+class Star implements Shape {
   final int VERTICES = 10;
   Coordinate[] coords;
   float cx, cy;
@@ -52,18 +44,4 @@ class Star {
       coords[i] = new Coordinate(rx, ry);
     }
   }
-}
-
-void setup() {
-  size(1350, 1080);
-
-  background(255);
-  // 三角形の重心x, y
-  float cx = width / 2;
-  float cy = height / 2;
-
-  Star star = new Star(cx, cy, 50, 100);
-  star.draw();
-  star.rotate(HALF_PI);
-  star.draw();
 }
