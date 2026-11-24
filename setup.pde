@@ -9,8 +9,11 @@ void setup() {
   float cx = width / 2;
   float cy = height / 2;
 
-  Star star = new Star(cx, cy, 50, 100);
-  star.draw();
-  star.rotate(HALF_PI);
-  star.draw();
+  int aRotation = 36;
+  for (int i = 0; i < aRotation * 2; i++) {
+    RegularTriangle triangle = new RegularTriangle(cx, cy, 100 + 10 * i);
+    noFill();
+    triangle.rotate(TWO_PI - (HALF_PI / 9) * i);
+    triangle.draw();
+  }
 }

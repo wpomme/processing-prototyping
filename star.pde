@@ -23,20 +23,20 @@ class Star implements Shape {
 
   void draw() {
     beginShape();
-    for (int i = 0; i < coords.length; i++) {
+    for (int i = 0; i < VERTICES; i++) {
       vertex(coords[i].x, coords[i].y);
     }
     endShape(CLOSE);
   }
 
   void scale(float n) {
-    for (int i = 0; i < coords.length; i++) {
+    for (int i = 0; i < VERTICES; i++) {
       coords[i] = new Coordinate(cx + n * (coords[i].x - cx), cy + n * (coords[i].y - cy));
     }
   }
 
   void rotate(float rad) {
-    for (int i = 0; i < coords.length; i++) {
+    for (int i = 0; i < VERTICES; i++) {
       float dx = coords[i].x - cx;
       float dy = coords[i].y - cy;
       float rx = cx + dx * cos(rad) - dy * sin(rad);
