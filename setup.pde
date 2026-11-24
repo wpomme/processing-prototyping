@@ -11,9 +11,13 @@ void setup() {
 
   int aRotation = 36;
   for (int i = 0; i < aRotation * 2; i++) {
-    RegularTriangle triangle = new RegularTriangle(cx, cy, 100 + 10 * i);
+    float rad = TWO_PI - (HALF_PI / 9) * i;
+    float sinval = sin(rad * 9);
+    float vibration = map(sinval, -1, 1, 8, 12);
+    RegularTriangle triangle = new RegularTriangle(cx, cy, 100 + vibration * i);
+
     noFill();
-    triangle.rotate(TWO_PI - (HALF_PI / 9) * i);
+    triangle.rotate(rad);
     triangle.draw();
   }
 }
