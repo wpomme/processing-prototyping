@@ -6,7 +6,7 @@ class RegularTriangle implements Shape {
   Coordinate[] coords;
   float cx, cy;
 
-  Star(float cx, float cy, float r) {
+  RegularTriangle(float cx, float cy, float r) {
     this.cx = cx;
     this.cy = cy;
     coords = new Coordinate[VERTICES];

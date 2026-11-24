@@ -12,12 +12,15 @@ void setup() {
   int aRotation = 36;
   for (int i = 0; i < aRotation * 2; i++) {
     float rad = TWO_PI - (HALF_PI / 9) * i;
-    float sinval = sin(rad * 9);
-    float vibration = map(sinval, -1, 1, 8, 12);
-    RegularTriangle triangle = new RegularTriangle(cx, cy, 100 + vibration * i);
+    // float sinval = sin(rad * 9);
+    // float vibration = map(sinval, -1, 1, 8, 12);
+    // RegularTriangle triangle = new RegularTriangle(cx, cy, 100 + vibration * i);
+    RegularTriangle triangle = new RegularTriangle(cx, cy, 100 + 10 * i);
 
     noFill();
     triangle.rotate(rad);
     triangle.draw();
+
   }
+  // save("scaling-triangle1.png");
 }
