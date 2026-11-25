@@ -9,4 +9,6 @@ void setup() {
   // 対数螺旋ならa = 10くらいがいい
   // Spiral spiral = new Spiral(width, height, 10);
   spiral.draw();
+
+  // save("../works/archimedean-spiral2.png");
 }
