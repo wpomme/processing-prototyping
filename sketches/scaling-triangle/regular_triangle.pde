@@ -3,17 +3,17 @@
  **/
 class RegularTriangle implements Shape {
   final int VERTICES = 3;
-  Coordinate[] coords;
+  Coord[] coords;
   float cx, cy;
 
   RegularTriangle(float cx, float cy, float r) {
     this.cx = cx;
     this.cy = cy;
-    coords = new Coordinate[VERTICES];
+    coords = new Coord[VERTICES];
 
     for (int i = 0; i < VERTICES; i++) {
       float angle = TWO_PI / VERTICES * i - HALF_PI;
-      coords[i] = new Coordinate(cx + r * cos(angle), cy + r * sin(angle));
+      coords[i] = new Coord(cx + r * cos(angle), cy + r * sin(angle));
     }
   }
 
@@ -27,7 +27,7 @@ class RegularTriangle implements Shape {
 
   void scale(float n) {
     for (int i = 0; i < VERTICES; i++) {
-      coords[i] = new Coordinate(cx + n * (coords[i].x - cx), cy + n * (coords[i].y - cy));
+      coords[i] = new Coord(cx + n * (coords[i].x - cx), cy + n * (coords[i].y - cy));
     }
   }
 
@@ -37,7 +37,7 @@ class RegularTriangle implements Shape {
       float dy = coords[i].y - cy;
       float rx = cx + dx * cos(rad) - dy * sin(rad);
       float ry = cy + dx * sin(rad) + dy * cos(rad);
-      coords[i] = new Coordinate(rx, ry);
+      coords[i] = new Coord(rx, ry);
     }
   }
 }

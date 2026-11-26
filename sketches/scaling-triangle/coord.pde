@@ -1,9 +1,9 @@
 /*
  * 座標を表すためのクラス
  **/
-class Coordinate {
+class Coord {
   float x, y;
-  Coordinate(float x, float y) {
+  Coord(float x, float y) {
     this.x = x;
     this.y = y;
   }
