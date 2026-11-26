@@ -43,7 +43,7 @@ public class Spiral {
     }
 
     /**
-     * 回転後のピクセル配列を返す（元のpixelsは変更しない）
+     * 回転後のピクセル配列を返す
      */
     public Pixel[] rotate(float rad) {
         Pixel[] rotated = new Pixel[totalSteps];

@@ -27,3 +27,11 @@ java {
 tasks.named<Test>("test") {
     useJUnitPlatform()
 }
+
+tasks.register<Copy>("jarSpiral") {
+    group = "build"
+    description = "Assembles the JAR and copies it to sketches/spiral/code."
+    dependsOn(tasks.named("jar"))
+    from(layout.buildDirectory.file("libs/app.jar"))
+    into("../sketches/spiral/code")
+}
