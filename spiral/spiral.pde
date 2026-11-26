@@ -40,6 +40,18 @@ class Spiral {
     _draw(pixels);
   }
 
+  // ピクセルと描画するという振る舞いを分離させる
+  void _draw(Pixel[] pixels) {
+    noFill();
+    beginShape();
+
+    for (int i = 0; i < totalSteps; i++) {
+      curveVertex(pixels[i].x, pixels[i].y);
+    }
+
+    endShape();
+  }
+
   // 一定の間隔ごとに螺旋の奇跡を点として描画する
   void drawPoints(int interval) {
     noFill();
@@ -52,16 +64,18 @@ class Spiral {
     endShape();
   }
 
-  // ピクセルと描画するという振る舞いを分離させる
-  void _draw(Pixel[] pixels) {
-    noFill();
-    beginShape();
+  void rotate(float rad) {
+    _rotate(rad, pixels);
+  }
 
+  void _rotate(float rad, Pixel[] pixels) {
     for (int i = 0; i < totalSteps; i++) {
-      curveVertex(pixels[i].x, pixels[i].y);
+      float dx = pixels[i].x - cx;
+      float dy = pixels[i].y - cy;
+      float rx = cx + dx * cos(rad) - dy * sin(rad);
+      float ry = cy + dx * sin(rad) + dy * cos(rad);
+      pixels[i] = new Pixel(rx, ry);
     }
-
-    endShape();
   }
 
   // 螺旋の計算式から描画するピクセルの位置を求める
