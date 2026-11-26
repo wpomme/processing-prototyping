@@ -40,6 +40,18 @@ class Spiral {
     _draw(pixels);
   }
 
+  // 一定の間隔ごとに螺旋の奇跡を点として描画する
+  void drawPoints(int interval) {
+    noFill();
+    beginShape();
+
+    for (int i = 0; i < totalSteps; i = i + interval) {
+      vertex(pixels[i].x, pixels[i].y);
+    }
+
+    endShape();
+  }
+
   // ピクセルと描画するという振る舞いを分離させる
   void _draw(Pixel[] pixels) {
     noFill();
