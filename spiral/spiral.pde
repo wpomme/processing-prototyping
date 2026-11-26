@@ -1,50 +1,85 @@
 /**
  * 螺旋を描画するクラス
- * 画面の中央が座標の中心
- * 引数として、画面の幅と高さとパラメーターrを取る
- * 対数螺旋の場合は、さらにもう一つのパラメーターbが必要
+ * 引数: x, y座標とパラメーターa, b、螺旋の回転数revs, 螺旋の計算式formula
+ * 螺旋の計算式がアルキメデスの螺旋の場合は、パラメーターは一つだけ必要
+ * 螺旋の計算式が対数螺旋の場合は、パラメーターa, bの二つが必要
  */
 class Spiral {
-  float width, height, cx, cy, r;
+  int DEGREE = 360;
+  float cx, cy, a, b;
+  int revs, totalSteps;
+  SpiralFormula formula;
+  Pixel[] pixels;
 
-  Spiral(float width, float height, float r) {
-    this.width = width;
-    this.height = height;
+  // アルキメデスの螺旋
+  Spiral(float cx, float cy, float b, int revs, SpiralFormula formula) {
+    this.cx = cx;
+    this.cy = cy;
+    this.b = b;
+    this.revs = revs;
+    this.totalSteps = DEGREE * revs;
+    this.formula = formula;
 
-    this.cx = width / 2;
-    this.cy = height / 2;
-    this.r = r;
+    this.pixels = _plot();
+  }
+
+  // 対数螺旋
+  Spiral(float cx, float cy, float a, float b, int revs, SpiralFormula formula) {
+    this.cx = cx;
+    this.cy = cy;
+    this.a = a;
+    this.b = b;
+    this.revs = revs;
+    this.totalSteps = DEGREE * revs;
+    this.formula = formula;
+
+    this.pixels = _plot();
   }
 
   void draw() {
-    float cx = this.cx;
-    float cy = this.cy;
-    float r = this.r;
+    _draw(pixels);
+  }
 
+  // ピクセルと描画するという振る舞いを分離させる
+  void _draw(Pixel[] pixels) {
     noFill();
     beginShape();
 
-    for (int i = 0; i < 360; i++) {
-      // アルキメデスの螺旋
-      float theta = radians(i);
-      float x = r * theta * cos(theta);
-      float y = r * theta * sin(theta);
-      // 対数螺旋
-      // float b = this.b;
-      // float x = r * exp(b * theta) * cos(theta);
-      // float y = r * exp(b * theta) * sin(theta);
-
-      // 座標からピクセルに変換
-      float xpixel = map(x, -r, r, cx - r, cx + r);
-      float ypixel = map(y, -r, r, cy + r, cy - r);
-
-      curveVertex(xpixel, ypixel);
+    for (int i = 0; i < totalSteps; i++) {
+      curveVertex(pixels[i].x, pixels[i].y);
     }
-
-    line(0, cy, this.width, cy);
-    line(cx, 0, cx, this.height);
 
     endShape();
   }
-}
 
+  // 螺旋の計算式から描画するピクセルの位置を求める
+  Pixel[] _plot() {
+    Coord[] coords = _coords(new Coord[totalSteps]);
+    return _pixels(new Pixel[totalSteps], coords);
+  }
+
+  // 計算式から座標系を作成する
+  Coord[] _coords(Coord[] coords) {
+    for (int i = 0; i < totalSteps; i++) {
+      float theta = radians(i);
+
+      coords[i] = formula.compute(theta, a, b);
+    }
+
+    return coords;
+  }
+
+  // 座標系からピクセルの配列を求める
+  Pixel[] _pixels(Pixel[] pixels, Coord[] coords) {
+    for (int i = 0; i < totalSteps; i++) {
+      pixels[i] = _pixel(coords[i]);
+    }
+
+    return pixels;
+  }
+
+  // 座標からピクセルへ変換する
+  Pixel _pixel(Coord c) {
+    return new Pixel(map(c.x, -b, b, cx - b, cx + b), map(c.y, -b, b, cy + b, cy - b));
+  }
+}
