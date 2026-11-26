@@ -14,3 +14,18 @@ find . -type f -name "*.autosave" -exec rm {} \;
 
 ### TODO
 - javaのコードを使う場合は、javaランタイムのバージョンを17以下にする必要がある
+
+### Java
+- JavaでもGUIウィジェットを使って図形を描画してみる
+
+#### 開発
+```bash
+# 困ったらタスクの一覧を見る
+./gradlew tasks
+
+# /appの方を動作させる
+./gradlew run
+
+# 単体テスト
+./gradlew test
+```

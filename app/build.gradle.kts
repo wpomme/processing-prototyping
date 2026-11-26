@@ -6,32 +6,39 @@
  */
 
 plugins {
-    `java-library`
+    // Apply the application plugin to add support for building a CLI application in Java.
+    application
 }
 
 repositories {
+    // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
 
 dependencies {
+    // Use JUnit Jupiter for testing.
     testImplementation(libs.junit.jupiter)
+
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    // This dependency is used by the application.
+    implementation(libs.guava)
+    implementation(project(":lib"))
 }
 
+// Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(27)
     }
 }
 
-tasks.named<Test>("test") {
-    useJUnitPlatform()
+application {
+    // Define the main class for the application.
+    mainClass = "org.example.App"
 }
 
-tasks.register<Copy>("jarSpiral") {
-    group = "build"
-    description = "Assembles the JAR and copies it to sketches/spiral/code."
-    dependsOn(tasks.named("jar"))
-    from(layout.buildDirectory.file("libs/app.jar"))
-    into("../sketches/spiral/code")
+tasks.named<Test>("test") {
+    // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
 }
