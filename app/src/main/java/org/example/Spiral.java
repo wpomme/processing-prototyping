@@ -12,9 +12,14 @@ public class Spiral {
         LOGARITHMIC
     }
 
+    @FunctionalInterface
+    private interface Formula {
+        Coord compute(float theta, float a, float b);
+    }
+
     private final float cx, cy, a, b;
     private final int revs, totalSteps;
-    private final SpiralFormula formula;
+    private final Formula formula;
     public final Pixel[] pixels;
 
     // アルキメデスの螺旋
@@ -34,10 +39,16 @@ public class Spiral {
         this.pixels = plot();
     }
 
-    private static SpiralFormula resolveFormula(Type type) {
+    private static Formula resolveFormula(Type type) {
         switch (type) {
-            case ARCHIMEDEAN: return new ArchimedeanFormula();
-            case LOGARITHMIC: return new LogarithmicFormula();
+            case ARCHIMEDEAN: return (theta, a, b) -> new Coord(
+                b * theta * (float) Math.cos(theta),
+                b * theta * (float) Math.sin(theta)
+            );
+            case LOGARITHMIC: return (theta, a, b) -> {
+                float r = a * (float) Math.exp(b * theta);
+                return new Coord(r * (float) Math.cos(theta), r * (float) Math.sin(theta));
+            };
             default: throw new IllegalArgumentException("Unknown type: " + type);
         }
     }
