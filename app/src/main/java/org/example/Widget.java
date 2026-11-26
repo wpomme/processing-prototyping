@@ -1,37 +1,46 @@
 package org.example;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 public class Widget {
     private static final int HEIGHT = 1350;
     private static final int WIDTH = 1350;
+    private static final String TITLE = "画像";
+    private JFrame frame;
 
     Widget() {
-      var f = new JFrame("テスト");
-      f.setVisible(true);
+      this.frame = new JFrame(TITLE);
+    }
 
-      f.setSize(HEIGHT, WIDTH);
-      setLocation(f);
-      return;
+    public void display() {
+      frame.setVisible(true);
+      frame.setSize(HEIGHT, WIDTH);
+      setLocation();
+    }
+
+    public void setImageFrame(BufferedImage image) {
+      JLabel label = new JLabel();
+
+      label.setIcon(new ImageIcon(image));
+      frame.add(label);
+      frame.pack();
     }
 
     /**
      * 前提条件: monitorSize > WIDTH, HEIGHTとする
      */
-    private void setLocation(JFrame f) {
+    private void setLocation() {
       Rectangle bounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
-      int monitorHeight = bounds.height;
-      int monitorWidth = bounds.width;
 
-      int moveHeight = 0;
-      int moveWidth = 0;
+      int paddingTop = toCenter(HEIGHT, bounds.height);
+      int paddingLeft = toCenter(WIDTH, bounds.width);
 
-      moveHeight = toCenter(HEIGHT, monitorHeight);
-      moveWidth = toCenter(WIDTH, monitorWidth);
-
-      f.setLocation(moveHeight, moveWidth);
+      frame.setLocation(paddingTop, paddingLeft);
     }
 
     private int toCenter(int widgetSize, int monitorSize) {
