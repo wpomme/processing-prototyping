@@ -32,3 +32,11 @@ find . -type f -name "*.autosave" -exec rm {} \;
 # 単体テスト
 ./gradlew test
 ```
+
+#### Formatter
+```bash
+# フォーマットする
+./gradlew spotlessApply
+# チェックのみ
+./gradlew spotlessCheck
+```
